@@ -35,7 +35,7 @@ The story journal pauses play. E or Close returns. During `choice`, a click or F
 ## The night, in order
 
 1. **Apartment.** The stairwell stays shut until both lessons are done. Take the headset (click or E). Press Q and see the room under the match (`briefed`). Shoot the practice plate (`drilled`). That shot does not spend Signal. Both flags open the door, and Siri says how the flag works.
-2. **Street.** One neighbor, Wendi. The relay east of her door is the flag. She walks to it and picks it up; the flag then rides on her, and the gamertag reads HAS THE FLAG. Click or E takes it off her. She is spared and stops fighting. Carry it to the plant. Shooting her is the other way through the plant door. If she dies while holding it, the flag drops where she fell.
+2. **Street.** One neighbor, Wendi. The relay east of her door is the flag. She walks to it and picks it up; the flag then rides on her, and the gamertag reads HAS THE FLAG. Click or E takes it off her. She is spared and stops fighting. Carry it to the plant. Shooting her is the other way through the plant door. If she dies while holding it, the flag drops where she fell, on top of her, and click or E still takes it.
 3. **Plant.** Drop the flag on the stand by the southwest door. The console will not start the tank while the flag is still on you. Treating the tank yields a flask. The flask is coolant. The east door opens once you have it.
 4. **Siri.** Pour the flask into the inlet. The inlet accepts it on the street layer. Q from the match layer is required first. Pouring plays a short vent, then the choice: take the score, or walk away.
 
