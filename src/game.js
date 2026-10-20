@@ -302,6 +302,8 @@ export function createGame() {
         pacified: wendi === "spared",
         alert: false,
         patrol: 0,
+        holding: false,
+        facing: 0,
       };
     }
     if (scene === "assistant" && wendi !== "killed") {
@@ -578,7 +580,10 @@ export function createGame() {
       if (wendi !== "killed") wendi = "spared";
       plantOpen = true;
       flag = "carried";
-      if (neighbor) neighbor.pacified = true;
+      if (neighbor) {
+        neighbor.pacified = true;
+        neighbor.holding = false;
+      }
       map = createMap(scene, flags());
       burst(item.x + item.w / 2, item.y + item.h / 2, "#ffe14a");
       sfx.good();
@@ -675,10 +680,19 @@ export function createGame() {
     floatAt(neighbor.x, neighbor.y, "", "#ffffff", true);
     floatAt(neighbor.x, neighbor.y + 48, "−1", "#ffe14a", false);
     if (neighbor.hp <= 0) {
+      const drop = neighbor.holding ? { x: neighbor.x, y: neighbor.y } : null;
       neighbor.alive = false;
+      neighbor.holding = false;
       wendi = "killed";
       plantOpen = true;
       map = createMap(scene, flags());
+      if (drop) {
+        const relay = map.props.find((prop) => prop.type === "relay");
+        if (relay) {
+          relay.x = drop.x - relay.w / 2;
+          relay.y = drop.y - relay.h / 2;
+        }
+      }
       signal = afterKill(signal);
       sfx.bad();
       hear("The Assistant", "Elimination. I award the click. The stairwell will not get her back. The plant opens because she is filed.");
@@ -752,10 +766,51 @@ export function createGame() {
     });
   }
 
+  function relayProp() {
+    return map.props.find((prop) => prop.type === "relay");
+  }
+
+  function moveToFlag(dt) {
+    const relay = relayProp();
+    if (!relay) return;
+    const tx = relay.x + relay.w / 2;
+    const ty = relay.y + relay.h / 2;
+    const dist = Math.hypot(tx - neighbor.x, ty - neighbor.y);
+    if (dist < 26) {
+      neighbor.holding = true;
+      neighbor.x = tx;
+      neighbor.y = ty;
+      if (!neighbor.announcedFlag) {
+        neighbor.announcedFlag = true;
+        ping("Wendi has the flag");
+      }
+      return;
+    }
+    neighbor.facing = Math.atan2(ty - neighbor.y, tx - neighbor.x);
+    const step = steer(
+      neighbor.x,
+      neighbor.y,
+      HIT_R,
+      Math.sign(tx - neighbor.x) * WENDI_SPEED * dt,
+      Math.sign(ty - neighbor.y) * WENDI_SPEED * dt,
+    );
+    neighbor.x = step.x;
+    neighbor.y = step.y;
+  }
+
+  function carryRelay() {
+    const relay = relayProp();
+    if (!relay) return;
+    relay.held = true;
+    relay.x = neighbor.x - relay.w / 2;
+    relay.y = neighbor.y - relay.h / 2;
+  }
+
   function updateNeighbor(dt) {
     if (!neighbor) return;
     neighbor.hurt = Math.max(0, neighbor.hurt - dt);
     if (!neighbor.alive) return;
+    if (flag !== "down") neighbor.holding = false;
     if (scene === "assistant") {
       neighbor.patrol += dt * 0.45;
       const pingPong = (Math.sin(neighbor.patrol) + 1) / 2;
@@ -776,6 +831,10 @@ export function createGame() {
       neighbor.y = home.y;
       return;
     }
+    if (scene === "street" && flag === "down" && !neighbor.holding) {
+      moveToFlag(dt);
+      if (!neighbor.holding) return;
+    }
     if (!neighbor.alert) {
       const dist = Math.hypot(player.x - neighbor.x, player.y - neighbor.y);
       if (dist < 170) neighbor.alert = true;
@@ -793,14 +852,19 @@ export function createGame() {
         );
         neighbor.x = pace.x;
         neighbor.y = pace.y;
+        if (neighbor.holding) carryRelay();
         return;
       }
     }
     neighbor.stun = Math.max(0, neighbor.stun - dt);
-    if (neighbor.stun > 0) return;
+    if (neighbor.stun > 0) {
+      if (neighbor.holding) carryRelay();
+      return;
+    }
     const dx = player.x - neighbor.x;
     const dy = player.y - neighbor.y;
     const dist = Math.hypot(dx, dy) || 1;
+    neighbor.facing = Math.atan2(dy, dx);
     const step = steer(neighbor.x, neighbor.y, HIT_R, (dx / dist) * WENDI_SPEED * dt, (dy / dist) * WENDI_SPEED * dt);
     neighbor.x = step.x;
     neighbor.y = step.y;
@@ -811,6 +875,7 @@ export function createGame() {
         hurtPlayer();
       }
     }
+    if (neighbor.holding) carryRelay();
   }
 
   function steer(x, y, r, dx, dy) {
@@ -1011,6 +1076,7 @@ export function createGame() {
       return layer === "match" ? "Q · SEE THE INLET" : "VENT · THE INLET";
     }
     if (flag === "down" && wendi === "killed") return "TAKE · THE FLAG";
+    if (flag === "down" && neighbor?.holding) return "TAKE · HER FLAG";
     if (flag === "dropped") return hasFlask ? "PLANT · THE ASSISTANT" : "PLANT · THE TANK";
     return "OBJECTIVE · CLICK WENDI";
   }
@@ -1116,7 +1182,9 @@ export function createGame() {
         plantOpen,
         flag,
         player: { x: player.x, y: player.y },
-        neighbor: neighbor ? { x: neighbor.x, y: neighbor.y, hp: neighbor.hp, alive: neighbor.alive } : null,
+        neighbor: neighbor
+          ? { x: neighbor.x, y: neighbor.y, hp: neighbor.hp, alive: neighbor.alive, holding: Boolean(neighbor.holding) }
+          : null,
         bossHp,
         floats: pops.filter((pop) => !pop.marker).map((pop) => pop.text),
         marks: pops.filter((pop) => pop.marker).length,

@@ -216,6 +216,7 @@ function drawProp(ctx, prop, layer, palette, map) {
     return;
   }
   if (prop.type === "relay") {
+    if (prop.held) return;
     if (layer === "match") {
       ctx.fillStyle = "#ffe14a";
       ctx.fillRect(prop.x + prop.w / 2 - 3, prop.y, 6, prop.h);
@@ -436,7 +437,8 @@ function drawNeighbor(ctx, neighbor, layer) {
   }
   if (!human) {
     diamond(ctx, neighbor.x, neighbor.y, 18, neighbor.hurt > 0 ? "#fff" : "#ff3b6a");
-    plate(ctx, neighbor.x, neighbor.y, "WENDI", "CLICK FOR SCORE", neighbor.hp, 3, "#ffd0e0");
+    if (neighbor.holding) drawCarriedFlag(ctx, neighbor);
+    plate(ctx, neighbor.x, neighbor.y, "WENDI", neighbor.holding ? "HAS THE FLAG" : "CLICK FOR SCORE", neighbor.hp, 3, "#ffd0e0");
     return;
   }
   person(ctx, neighbor.x, neighbor.y, {
@@ -446,6 +448,7 @@ function drawNeighbor(ctx, neighbor, layer) {
     hurt: neighbor.hurt > 0,
     upright: true,
   });
+  if (neighbor.holding) drawCarriedFlag(ctx, neighbor);
   if (layer === "match" && neighbor.pacified) {
     plate(ctx, neighbor.x, neighbor.y, "WENDI", "DISCONNECTED", null, null, "#d7e2cf");
   } else if (layer === "street") {
