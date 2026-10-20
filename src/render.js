@@ -281,7 +281,7 @@ function drawProp(ctx, prop, layer, palette, map) {
       ctx.lineTo(cx, prop.y + prop.h);
       ctx.lineTo(prop.x, cy);
       ctx.fill();
-      plate(ctx, cx, prop.y + prop.h + 78, "THE ASSISTANT", `HP ${prop.hp ?? 1000}`, null, null, "#ffe4f0");
+      plate(ctx, cx, prop.y + prop.h + 78, "SIRI", `HP ${prop.hp ?? 1000}`, null, null, "#ffe4f0");
       return;
     }
     ctx.fillStyle = "#1c2428";

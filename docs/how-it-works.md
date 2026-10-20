@@ -4,7 +4,7 @@ This is the map of the demo as it stands: one night, four rooms, two layers, and
 
 GitHub Pages serves the repository root. There is no build step on the site. Vite is the local dev server (`npm run dev`, port 47321). `base` in `vite.config.js` is `./`, and `.nojekyll` is present so Pages does not rewrite the paths. `CNAME` is `clickwendi.com`. The title credit, drawn in `src/ui.js`, is the exact string `Build by PESSS GAMES`.
 
-The cast is fictional. The voice in the headset is The Assistant. The neighbor is Wendi, in 4B. The crime the match asks for is clicking her.
+The neighbor is Wendi, in 4B. The voice in the headset is Siri. The crime the match asks for is clicking Wendi.
 
 ## Files
 
@@ -34,18 +34,18 @@ The story journal pauses play. E or Close returns. During `choice`, a click or F
 
 ## The night, in order
 
-1. **Apartment.** The stairwell stays shut until both lessons are done. Take the headset (click or E). Press Q and see the room under the match (`briefed`). Shoot the practice plate (`drilled`). That shot does not spend Signal. Both flags open the door, and The Assistant says how the flag works.
+1. **Apartment.** The stairwell stays shut until both lessons are done. Take the headset (click or E). Press Q and see the room under the match (`briefed`). Shoot the practice plate (`drilled`). That shot does not spend Signal. Both flags open the door, and Siri says how the flag works.
 2. **Street.** One neighbor, Wendi. The relay east of her door is the flag. She walks to it and picks it up; the flag then rides on her, and the gamertag reads HAS THE FLAG. Click or E takes it off her. She is spared and stops fighting. Carry it to the plant. Shooting her is the other way through the plant door. If she dies while holding it, the flag drops where she fell.
 3. **Plant.** Drop the flag on the stand by the southwest door. The console will not start the tank while the flag is still on you. Treating the tank yields a flask. The flask is coolant. The east door opens once you have it.
-4. **The Assistant.** Pour the flask into the inlet. The inlet accepts it on the street layer. Q from the match layer is required first. Pouring plays a short vent, then the choice: take the score, or walk away.
+4. **Siri.** Pour the flask into the inlet. The inlet accepts it on the street layer. Q from the match layer is required first. Pouring plays a short vent, then the choice: take the score, or walk away.
 
 ## Two layers
 
 Q toggles `match` and `street` after the headset is on. Without it, the apartment is only the room.
 
-Match is the shooter: magenta HUD, gamertags, diamond bodies. Street is the block: muted colors, human figures, serif captions. The same walls and the same people exist on both. The inlet in the Assistant room is a street-layer object. Her bolts exist only on the match layer, and switching to street clears them. Those bolts cross the room without hitting walls.
+Match is the shooter: magenta HUD, gamertags, diamond bodies. Street is the block: muted colors, human figures, serif captions. The same walls and the same people exist on both. The inlet in Siri's room is a street-layer object. Her bolts exist only on the match layer, and switching to street clears them. Those bolts cross the room without hitting walls.
 
-Entering the street or the Assistant room starts on match. Entering the plant starts on street. The apartment starts on street until the headset goes on, then switches to match.
+Entering the street or Siri's room starts on match. Entering the plant starts on street. The apartment starts on street until the headset goes on, then switches to match.
 
 ## Flag
 
@@ -59,17 +59,17 @@ Taking the flag sets `wendi` to `"spared"` unless she is already `"killed"`, set
 
 ## Signal, health, shots
 
-Signal starts at 100 and never goes below 0. `SHOT_COST` is 30. `KILL_COST` is 10, applied once when Wendi's HP reaches 0. Practice-plate shots, lightning itself, and shots into The Assistant's plate do not spend Signal. Three hits plus the kill can zero it. Taking the chair also sets it to 0.
+Signal starts at 100 and never goes below 0. `SHOT_COST` is 30. `KILL_COST` is 10, applied once when Wendi's HP reaches 0. Practice-plate shots, lightning itself, and shots into Siri's plate do not spend Signal. Three hits plus the kill can zero it. Taking the chair also sets it to 0.
 
 HP is 4 hearts in the top right. Wendi is not a wall. While the flag is still down she ignores the chase and walks to the relay at 112. Once she is holding it, she aggros inside 170px or when shot, still at 112 against the player's 176, and damages at a distance under 28 about once a second. The flag stays on her through that chase. The player is immune for 1 second after a hit. A change in the player's HP floats under them for 0.9s, red for a loss and green for a heal. Entering a scene sets HP back to 4 and floats the amount regained. Wendi's hits show a yellow X and a yellow −1. Her bar steps down by 1 from 3.
 
-A shot is instant. `shoot` faces the click, then `castBeam` steps 10px from the muzzle and stops on the first hit: practice plate, a solid, Wendi, The Assistant's plate (−30 from a plate of 1000), or one of her bolts. The drawn strike is a jagged teal bolt plus a short fork, life 0.2s. F shoots the current facing with a default travel of 240. The plate can reach 0. She does not die. The first shot on her plate is a spoken line; later shots only update the caption, so the journal does not fill with repeats.
+A shot is instant. `shoot` faces the click, then `castBeam` steps 10px from the muzzle and stops on the first hit: practice plate, a solid, Wendi, Siri's plate (−30 from a plate of 1000), or one of her bolts. The drawn strike is a jagged teal bolt plus a short fork, life 0.2s. F shoots the current facing with a default travel of 240. The plate can reach 0. She does not die. The first shot on her plate is a spoken line; later shots only update the caption, so the journal does not fill with repeats.
 
 ## Checkpoints
 
 `writeCheckpoint` stores `{ v: 1, checkpoint }`. The checkpoint is scene, Signal, headset, flask, Wendi (`pending`, `spared`, or `killed`), `briefed`, `drilled`, and `flag`. It does not store position, facing, HP, or the journal.
 
-Rank is apartment 0, street 1, plant 2, plant with the flask 2.5, Assistant 3. `shouldAdvanceCheckpoint` only replaces the save when the new rank is higher. Headset, the lesson, picking up the flag, dropping it, and filling the flask pass `force: true`, so they write at the same rank. Walking back to an earlier room updates the live scene and does not rewind the save.
+Rank is apartment 0, street 1, plant 2, plant with the flask 2.5, Siri 3. `shouldAdvanceCheckpoint` only replaces the save when the new rank is higher. Headset, the lesson, picking up the flag, dropping it, and filling the flask pass `force: true`, so they write at the same rank. Walking back to an earlier room updates the live scene and does not rewind the save.
 
 ## The tank
 
@@ -87,12 +87,12 @@ Walk away: title "You walk off the path." Signal stays where it was. Alive, she 
 
 `hear(speaker, text)` shows a caption and appends `{ who, line }` if that exact line is not already in the journal. `say` shows a caption only. `ensurePrologue` puts the 2032 line at the front whenever a room starts. C or the Story button opens "Tonight" while you are in play. The journal lasts for the page session. A reload keeps the checkpoint and loses the lines heard since then. The room's entrance line is spoken again.
 
-Speakers used on purpose: `2032`, `Ward slip`, `The Assistant`, `Wendi`, `You`.
+Speakers used on purpose: `2032`, `Ward slip`, `Siri`, `Wendi`, `You`.
 
 ## A few sharp edges
 
-The apartment stairwell label can still clip at the right edge of that small room. Closed doors do not draw a world label. Their hint is the closed copy, and the Assistant door's hint is "Flask opens this door."
+The apartment stairwell label can still clip at the right edge of that small room. Closed doors do not draw a world label. Their hint is the closed copy, and Siri's door hint is "Flask opens this door."
 
-Wendi's street spawn and her Assistant-room patrol are separate. On the street she starts near 4B, then goes to the flag and carries it until you take it or she drops it. In the Assistant room, if she is alive, she paces a fixed lane and does not chase.
+Wendi's street spawn and her patrol in Siri's room are separate. On the street she starts near 4B, then goes to the flag and carries it until you take it or she drops it. In Siri's room, if she is alive, she paces a fixed lane and does not chase.
 
 `go()` places you with `ARRIVALS["<destination>:<source>"]`. A missing key falls back to the map's spawn. The street's north lane, around y 150–250, is the open walk east. The cars sit on the straight line from the stairwell to Wendi.

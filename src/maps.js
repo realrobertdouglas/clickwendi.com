@@ -117,8 +117,8 @@ function plant(flags) {
         h: 104,
         open: flags.hasFlask,
         to: "assistant",
-        label: flags.hasFlask ? "Assistant" : "Coolant",
-        matchLabel: flags.hasFlask ? "Boss" : "Locked",
+        label: flags.hasFlask ? "Siri" : "Coolant",
+        matchLabel: flags.hasFlask ? "Siri" : "Locked",
       }),
     ],
   };

@@ -13,7 +13,7 @@ const SCENE_NAME = {
   apartment: "4A",
   street: "The block",
   plant: "Wastewater",
-  assistant: "The Assistant",
+  assistant: "Siri",
 };
 
 export function createGame() {
@@ -130,7 +130,7 @@ export function createGame() {
     graduated = true;
     commit({ hasHeadset: true, briefed: true, drilled: true, force: true }, "lesson");
     hear(
-      "The Assistant",
+      "Siri",
       "The stairwell is open. I will tell you to click Wendi. That costs Signal. Click or E the flag instead, carry it to the plant, and leave it on the stand.",
       9,
     );
@@ -252,19 +252,19 @@ export function createGame() {
         return;
       }
       if (!briefed) {
-        hear("The Assistant", "Operator online. Press Q. One view is my match. The other is the room you live in.");
+        hear("Siri", "Operator online. Press Q. One view is my match. The other is the room you live in.");
         return;
       }
       if (!drilled) {
-        hear("The Assistant", "The plate by the door is a graphic. Click or F shoots it. Signal stays.");
+        hear("Siri", "The plate by the door is a graphic. Click or F shoots it. Signal stays.");
         return;
       }
-      hear("The Assistant", "The stairwell is open. She is outside.");
+      hear("Siri", "The stairwell is open. She is outside.");
       return;
     }
     if (scene === "street") {
       hear(
-        "The Assistant",
+        "Siri",
         "Objective: Wendi, 4B. The flag is east of her door. Click or E picks it up, and it stays on you until the stand in the plant.",
         8,
       );
@@ -272,21 +272,21 @@ export function createGame() {
     }
     if (scene === "plant") {
       if (flag === "carried") {
-        hear("The Assistant", "The flag is still on you. The stand by the door takes it. Then the tank. The flask is coolant, not a cure.");
+        hear("Siri", "The flag is still on you. The stand by the door takes it. Then the tank. The flask is coolant, not a cure.");
         return;
       }
       if (flag === "dropped") {
         hear("You", "The flag is on the stand. The tank keeps the ward's relays cold. Treat it if you want a flask for her loop.");
         return;
       }
-      hear("The Assistant", "The relays drink the ward's water. Treat a tank. The flask shuts a loop. It will not bring anyone back.");
+      hear("Siri", "The relays drink the ward's water. Treat a tank. The flask shuts a loop. It will not bring anyone back.");
       return;
     }
     if (wendi === "killed") {
-      hear("The Assistant", "The objective is already filed. The path is paint. Vent the flask if you want the chair I am in.");
+      hear("Siri", "The objective is already filed. The path is paint. Vent the flask if you want the chair I am in.");
       return;
     }
-    hear("The Assistant", "I cleared you a path. She is still the objective. Click her, and the match can end cleanly. Or vent the flask and decide.");
+    hear("Siri", "I cleared you a path. She is still the objective. Click her, and the match can end cleanly. Or vent the flask and decide.");
   }
 
   function makeNeighbor() {
@@ -328,8 +328,8 @@ export function createGame() {
     applyCheckpoint(entering, from, forward);
     if (forward) commit({}, SCENE_NAME[next]);
     else if (next === "street") {
-      hear(wendi === "killed" ? "The Assistant" : "Wendi", wendi === "killed" ? "Back on the block. I am still short an objective." : "You came back. I'm still here. The flag is still the way out.");
-    } else if (next === "plant") hear("The Assistant", "Back in the plant. The flask still needs a tank if you don't have it.");
+      hear(wendi === "killed" ? "Siri" : "Wendi", wendi === "killed" ? "Back on the block. I am still short an objective." : "You came back. I'm still here. The flag is still the way out.");
+    } else if (next === "plant") hear("Siri", "Back in the plant. The flask still needs a tank if you don't have it.");
   }
 
   function hurtPlayer(amount = 1) {
@@ -428,7 +428,7 @@ export function createGame() {
         if (!briefed) {
           map = createMap(scene, flags());
           sfx.good();
-          hear("The Assistant", `The plate breaks. Signal stays at ${signal}. Press Q before the stairwell will open.`);
+          hear("Siri", `The plate breaks. Signal stays at ${signal}. Press Q before the stairwell will open.`);
         } else {
           graduate();
         }
@@ -448,7 +448,7 @@ export function createGame() {
         floatAt(boss.x + boss.w / 2, boss.y + boss.h + 76, "−30", "#ffe14a", false);
         if (!bossSpoken) {
           bossSpoken = true;
-          hear("The Assistant", "The plate can fall all night. I do not. Pour the flask in the inlet if you want a real answer.");
+          hear("Siri", "The plate can fall all night. I do not. Pour the flask in the inlet if you want a real answer.");
         } else {
           say(`The plate shows ${bossHp}. She calls the rest client prediction.`);
         }
@@ -478,7 +478,7 @@ export function createGame() {
       briefed = true;
       if (!drilled) {
         hear(
-          "The Assistant",
+          "Siri",
           layer === "street"
             ? "This is the room under the match. The plate by the door is a graphic. Click or F shoots it. Signal will not move."
             : "Match layer. I dressed the plate as a drone. Press Q, then click or F.",
@@ -493,10 +493,10 @@ export function createGame() {
     }
     if (layer === "street" && scene === "assistant") {
       bolts = [];
-      hear("The Assistant", "The path is paint. My voice is a speaker. The inlet is on the east side. Press E there, not in the graphic.");
+      hear("Siri", "The path is paint. My voice is a speaker. The inlet is on the east side. Press E there, not in the graphic.");
     }
     if (layer === "match" && scene === "assistant") {
-      hear("The Assistant", "Match layer. The fire is a graphic. It can still put you down. Q, if you want the real inlet.");
+      hear("Siri", "Match layer. The fire is a graphic. It can still put you down. Q, if you want the real inlet.");
     }
   }
 
@@ -568,7 +568,7 @@ export function createGame() {
       layer = "match";
       map = createMap(scene, flags());
       commit({ hasHeadset: true, briefed, drilled, force: true }, "headset");
-      hear("The Assistant", "Headset on. I can see you. Press Q to see the room under me.");
+      hear("Siri", "Headset on. I can see you. Press Q to see the room under me.");
       sfx.good();
       return;
     }
@@ -589,7 +589,7 @@ export function createGame() {
       sfx.good();
       commit({ flag: "carried", force: true }, "flag");
       hear(
-        neighbor?.alive === false ? "The Assistant" : "Wendi",
+        neighbor?.alive === false ? "Siri" : "Wendi",
         neighbor?.alive === false
           ? "You take the flag. It rides on you. There is no one left to leave the match."
           : "Then I'm not playing. The flag is on you now. I'll be here when you come off the match.",
@@ -626,7 +626,7 @@ export function createGame() {
     }
     if (item.type === "inlet") {
       if (layer === "match") {
-        hear("The Assistant", "Press Q. The inlet is on the street, under the match. I do not let you pour from inside the graphic.");
+        hear("Siri", "Press Q. The inlet is on the street, under the match. I do not let you pour from inside the graphic.");
         return;
       }
       if (!hasFlask) {
@@ -639,7 +639,7 @@ export function createGame() {
       layer = "street";
       bolts = [];
       burst(item.x + item.w / 2, item.y + item.h / 2, "#8fd0ff");
-      hear("The Assistant", "You vent the flask into the inlet. My voice skips. The score is ready.");
+      hear("Siri", "You vent the flask into the inlet. My voice skips. The score is ready.");
       sfx.good();
     }
   }
@@ -695,7 +695,7 @@ export function createGame() {
       }
       signal = afterKill(signal);
       sfx.bad();
-      hear("The Assistant", "Elimination. I award the click. The stairwell will not get her back. The plant opens because she is filed.");
+      hear("Siri", "Elimination. I award the click. The stairwell will not get her back. The plant opens because she is filed.");
       return;
     }
     hear("Wendi", `That is not the game. The headset scores it. −${SHOT_COST} Signal.`);
@@ -755,7 +755,7 @@ export function createGame() {
 
     if (scene === "street" && !streetHinted && streetTime > 5 && layer === "match") {
       streetHinted = true;
-      hear("The Assistant", "Q shows the street under the gamertag. The objective is lying about what she is.");
+      hear("Siri", "Q shows the street under the gamertag. The objective is lying about what she is.");
     }
   }
 
@@ -949,7 +949,7 @@ export function createGame() {
       gauge = null;
       map = createMap(scene, flags());
       commit({ hasFlask: true, scene: "plant", force: true }, "flask");
-      hear("The Assistant", "Flask filled. It will heal nothing. Carry it to my inlet and I can offer you the score.");
+      hear("Siri", "Flask filled. It will heal nothing. Carry it to my inlet and I can offer you the score.");
       sfx.good();
     } else if (next.result === "fail") {
       mode = "play";
@@ -971,7 +971,7 @@ export function createGame() {
         title: "You take the chair.",
         body:
           wendi === "killed"
-            ? "The Assistant steps aside. The block still needs an objective by morning. You will name the next neighbor. The headset does not come off, because you are the headset. Signal 0."
+            ? "Siri steps aside. The block still needs an objective by morning. You will name the next neighbor. The headset does not come off, because you are the headset. Signal 0."
             : "Wendi is still in 4B, waiting to hear if the game is over. She becomes the first name you will assign. The headset does not come off, because you are the headset. Signal 0.",
         actions: [{ id: "title", label: "Title" }],
       };
@@ -1070,14 +1070,14 @@ export function createGame() {
 
   function nextStep() {
     if (flag === "carried") return scene === "plant" ? "DROP · THE FLAG" : "CARRY · THE PLANT";
-    if (scene === "plant") return hasFlask ? "EXIT · THE ASSISTANT" : "TREAT · THE TANK";
+    if (scene === "plant") return hasFlask ? "EXIT · SIRI" : "TREAT · THE TANK";
     if (scene === "assistant") {
       if (!hasFlask) return "NEED · COOLANT";
       return layer === "match" ? "Q · SEE THE INLET" : "VENT · THE INLET";
     }
     if (flag === "down" && wendi === "killed") return "TAKE · THE FLAG";
     if (flag === "down" && neighbor?.holding) return "TAKE · HER FLAG";
-    if (flag === "dropped") return hasFlask ? "PLANT · THE ASSISTANT" : "PLANT · THE TANK";
+    if (flag === "dropped") return hasFlask ? "PLANT · SIRI" : "PLANT · THE TANK";
     return "OBJECTIVE · CLICK WENDI";
   }
 

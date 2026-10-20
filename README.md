@@ -2,7 +2,7 @@
 
 A top-down browser demo for [clickwendi.com](https://clickwendi.com). The year is 2032. The block is queued into a shooter. You are still awake.
 
-Wendi, in 4B, thinks the flag is a game. The Assistant is the voice in the headset, and she wants the chair filled. Shooting Wendi scores the match and costs Signal. Taking the flag puts it on you. The plant stand takes it off. A tank fills a flask of coolant. At the end you take the Assistant's chair or walk away. C, or Story, keeps the lines.
+Wendi, in 4B, thinks the flag is a game. Siri is the voice in the headset, and she wants the chair filled. Shooting Wendi scores the match and costs Signal. Taking the flag puts it on you. The plant stand takes it off. A tank fills a flask of coolant. At the end you take Siri's chair or walk away. C, or Story, keeps the lines.
 
 ## Play locally
 
