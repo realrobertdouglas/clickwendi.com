@@ -78,9 +78,9 @@ export function createGame() {
     }
     return {
       kind: "title",
-      eyebrow: "2032 · a clear signal demo",
+      eyebrow: "Year 2032",
       title: "Click Wendi",
-      body: "The ward has queued your block into a match. The headset on your desk will name an objective. Tonight it is Wendi, in 4B. She thinks she is playing capture the flag.",
+      body: "A headset on your desk starts a game on your street. It tells you to click Wendi, your neighbor in apartment 4B. She thinks you are only playing capture the flag.",
       actions,
     };
   }
@@ -218,7 +218,7 @@ export function createGame() {
   }
 
   function ensurePrologue() {
-    const line = "The ward queued your block into a match. The objective is a neighbor. Tonight she is Wendi, in 4B, and she thinks the flag is a game.";
+    const line = "A headset on your desk starts a game on your street. It tells you to click Wendi, your neighbor in apartment 4B. She thinks you are only playing capture the flag.";
     if (!story.some((page) => page.line === line)) story.unshift({ who: "2032", line });
   }
 
