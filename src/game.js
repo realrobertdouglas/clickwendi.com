@@ -67,3 +67,21 @@ export function createGame() {
   function flags() {
     return { hasHeadset, hasFlask, plantOpen, wendi, briefed, drilled, flag };
   }
+
+  function titleMenu() {
+    const actions = [{ id: "start", label: "Begin" }];
+    if (savedAtBoot && checkpoint) {
+      actions.push({
+        id: "resume",
+        label: `Resume \u2014 ${SCENE_NAME[checkpoint.scene] ?? "checkpoint"}`,
+      });
+    }
+    return {
+      kind: "title",
+      eyebrow: "2032 \u00b7 a clear signal demo",
+      title: "Click Wendi",
+      body: "The ward has queued your block into a match. The headset on your desk will name an objective. Tonight it is Wendi, in 4B. She thinks she is playing capture the flag.",
+      actions,
+    };
+  }
+}
