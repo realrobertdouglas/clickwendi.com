@@ -2,21 +2,48 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Click Wendi</title>
-  <style>
-    :root { color-scheme: light dark; }
-    body { margin: 0; min-height: 100vh; display: grid; place-items: center;
-           font-family: system-ui, -apple-system, sans-serif; background: Canvas; color: CanvasText; }
-    main { text-align: center; padding: 16px; }
-    h1 { font-size: clamp(2rem, 8vw, 4rem); margin: 0 0 .25em; }
-    p { opacity: .7; }
-  </style>
+  <meta name="description" content="2032. The ward queued your block into a match. Wendi, in 4B, thinks the flag is a game.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Source+Serif+4:opsz,wght@8..60,460;8..60,600&display=swap" rel="stylesheet">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect fill='%23120a14' width='32' height='32'/%3E%3Cpath fill='%23ff3b6a' d='M16 4l8 12-8 12-8-12z'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="./src/style.css">
 </head>
-<body>
-  <main>
-    <h1>Click Wendi</h1>
-    <p>Coming soon.</p>
-  </main>
+<body data-mode="title">
+  <div id="app">
+    <canvas id="view" aria-label="Click Wendi, the street and the match"></canvas>
+    <header id="hud">
+      <div id="signal">
+        <span>Signal</span>
+        <span class="track"><span class="fill"></span></span>
+        <span class="num">100</span>
+        <span id="flask" hidden>Flask</span>
+      </div>
+      <div id="objective"></div>
+      <div id="hearts" aria-label="Health"></div>
+    </header>
+    <p id="toast" hidden></p>
+    <p id="caption" hidden><span id="who"></span><span id="line"></span></p>
+    <button id="story" type="button">Story</button>
+    <p id="hint" hidden></p>
+    <p id="keys">
+      <span id="keys-play"><kbd>WASD</kbd> move <kbd>Q</kbd> layer <kbd>E</kbd> use · click or <kbd class="shoot">F</kbd> shoot · <kbd>C</kbd> story</span>
+      <span id="keys-gauge">Hold <kbd>Space</kbd> to lower the mark. Release to let it rise. Stay in the green band.</span>
+    </p>
+    <div id="menu"></div>
+    <div id="touch">
+      <div id="stick" aria-hidden="true"><div id="nub"></div></div>
+      <div id="actions">
+        <button type="button" data-act="layer">Layer</button>
+        <button type="button" data-act="use">Use</button>
+        <button type="button" data-act="shoot" class="shoot">Shoot</button>
+        <button type="button" data-act="story">Story</button>
+        <button type="button" data-hold="valve" class="valve">Valve</button>
+      </div>
+    </div>
+  </div>
+  <script type="module" src="./src/main.js"></script>
 </body>
 </html>
