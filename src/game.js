@@ -1056,12 +1056,12 @@ export function createGame() {
   function refreshHud() {
     look = null;
     if (mode === "title") {
-      objective = "OBJECTIVE \u00b7 CLICK WENDI";
+      objective = "OBJECTIVE · CLICK WENDI";
       hint = "";
       return;
     }
     if (mode === "play" && scene === "apartment" && layer === "match") {
-      objective = drilled ? "EXIT \u00b7 STAIRWELL" : "DRILL \u00b7 SHOOT THE PLATE";
+      objective = drilled ? "EXIT · STAIRWELL" : "DRILL · SHOOT THE PLATE";
     } else if (mode === "play" && scene !== "apartment") {
       objective = nextStep();
     } else if (mode !== "play" || scene === "apartment") {
@@ -1072,33 +1072,33 @@ export function createGame() {
     const item = nearestProp(["headset", "plate", "relay", "drop", "console", "inlet", "door"], 78);
     if (!item) return;
     look = { x: item.x, y: item.y, w: item.w, h: item.h };
-    if (item.type === "headset") hint = "Click or E  \u00b7  Take the headset";
-    else if (item.type === "plate") hint = "Click or F  \u00b7  Shoot the plate";
-    else if (item.type === "relay") hint = layer === "match" ? "Click or E  \u00b7  Capture the flag" : "Click or E  \u00b7  Take the relay";
+    if (item.type === "headset") hint = "Click or E  ·  Take the headset";
+    else if (item.type === "plate") hint = "Click or F  ·  Shoot the plate";
+    else if (item.type === "relay") hint = layer === "match" ? "Click or E  ·  Capture the flag" : "Click or E  ·  Take the relay";
     else if (item.type === "drop") {
-      hint = flag === "carried" ? "Click or E  \u00b7  Drop the flag" : flag === "dropped" ? "Flag is on the stand" : "Stand \u00b7 no flag";
+      hint = flag === "carried" ? "Click or E  ·  Drop the flag" : flag === "dropped" ? "Flag is on the stand" : "Stand · no flag";
     }
-    else if (item.type === "console") hint = hasFlask ? "Tank treated" : "Click or E  \u00b7  Treat the tank";
+    else if (item.type === "console") hint = hasFlask ? "Tank treated" : "Click or E  ·  Treat the tank";
     else if (item.type === "inlet") {
-      if (!hasFlask) hint = "Coolant inlet \u00b7 no flask";
-      else hint = layer === "match" ? "Q  \u00b7  The inlet is under the match" : "Click or E  \u00b7  Vent the flask";
+      if (!hasFlask) hint = "Coolant inlet · no flask";
+      else hint = layer === "match" ? "Q  ·  The inlet is under the match" : "Click or E  ·  Vent the flask";
     } else if (item.type === "door") {
       if (!item.open && item.to === "assistant") hint = "Flask opens this door";
-      else hint = item.open ? `Door \u00b7 ${layer === "match" ? item.matchLabel : item.label}` : item.label;
+      else hint = item.open ? `Door · ${layer === "match" ? item.matchLabel : item.label}` : item.label;
     }
   }
 
   function nextStep() {
-    if (flag === "carried") return scene === "plant" ? "DROP \u00b7 THE FLAG" : "CARRY \u00b7 THE PLANT";
-    if (scene === "plant") return hasFlask ? "EXIT \u00b7 SIRI" : "TREAT \u00b7 THE TANK";
+    if (flag === "carried") return scene === "plant" ? "DROP · THE FLAG" : "CARRY · THE PLANT";
+    if (scene === "plant") return hasFlask ? "EXIT · SIRI" : "TREAT · THE TANK";
     if (scene === "assistant") {
-      if (!hasFlask) return "NEED \u00b7 COOLANT";
-      return layer === "match" ? "Q \u00b7 SEE THE INLET" : "VENT \u00b7 THE INLET";
+      if (!hasFlask) return "NEED · COOLANT";
+      return layer === "match" ? "Q · SEE THE INLET" : "VENT · THE INLET";
     }
-    if (flag === "down" && wendi === "killed") return "TAKE \u00b7 THE FLAG";
-    if (flag === "down" && neighbor?.holding) return "TAKE \u00b7 HER FLAG";
-    if (flag === "dropped") return hasFlask ? "PLANT \u00b7 SIRI" : "PLANT \u00b7 THE TANK";
-    return "OBJECTIVE \u00b7 CLICK WENDI";
+    if (flag === "down" && wendi === "killed") return "TAKE · THE FLAG";
+    if (flag === "down" && neighbor?.holding) return "TAKE · HER FLAG";
+    if (flag === "dropped") return hasFlask ? "PLANT · SIRI" : "PLANT · THE TANK";
+    return "OBJECTIVE · CLICK WENDI";
   }
 
   function view() {
