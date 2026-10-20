@@ -91,7 +91,7 @@ function renderMenu(menu) {
       const entry = document.createElement("p");
       if (page.who) {
         const who = document.createElement("span");
-        who.className = "who";
+        who.className = "who");
         who.textContent = page.who;
         entry.append(who, document.createElement("br"));
       }
@@ -102,9 +102,29 @@ function renderMenu(menu) {
   }
   card.append(row);
   if (menu.kind === "title") {
-    const keys = document.createElement("p");
+    const keys = document.createElement("ul");
     keys.className = "title-keys";
-    keys.textContent = "WASD move · Q layer · E use · click or F shoot · C story · checkpoints save in this browser";
+    const lines = [
+      [["WASD"], " moves you"],
+      [["Q"], " switches between the game and the street"],
+      [["E"], " picks something up"],
+      [["Click", "F"], " shoots"],
+      [["C"], " opens the story"],
+    ];
+    for (const [buttons, text] of lines) {
+      const item = document.createElement("li");
+      buttons.forEach((label, index) => {
+        if (index > 0) item.append(document.createTextNode(" or "));
+        const key = document.createElement("kbd");
+        key.textContent = label;
+        item.append(key);
+      });
+      item.append(document.createTextNode(text));
+      keys.append(item);
+    }
+    const saved = document.createElement("li");
+    saved.textContent = "This browser saves your place.";
+    keys.append(saved);
     card.append(keys);
   }
   root.append(card);

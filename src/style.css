@@ -219,13 +219,30 @@ body.match .card { background: rgba(18, 6, 16, 0.9); }
   line-height: 0.95;
 }
 
-.lede, .title-keys {
+.lede {
   margin: 0;
-  color: var(--dim);
-  line-height: 1.45;
+  color: var(--paper);
+  font-size: 1.05rem;
+  line-height: 1.5;
 }
 
-.title-keys { margin-top: 16px; font-size: 12px; }
+.title-keys {
+  margin: 16px 0 0;
+  padding: 0;
+  list-style: none;
+  color: var(--paper);
+  font-size: 15px;
+  line-height: 1.4;
+}
+
+.title-keys li + li { margin-top: 6px; }
+
+.title-keys kbd {
+  font-family: var(--mono);
+  font-size: 0.86em;
+  border: 1px solid var(--line);
+  padding: 1px 5px;
+}
 
 .story-log {
   display: flex;
