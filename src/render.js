@@ -46,17 +46,23 @@ export function paint(ctx, view, width, height) {
   ctx.scale(zoom, zoom);
   ctx.translate(-camX, -camY);
 
+  const droppedFlag =
+    view.neighbor && !view.neighbor.alive
+      ? view.map.props.find((prop) => prop.type === "relay" && !prop.held)
+      : null;
   drawFloor(ctx, view.map, palette, view.layer);
   for (const prop of view.map.props) {
     if (prop.type === "path" || prop.type === "plaque" || prop.type === "window") drawProp(ctx, prop, view.layer, palette);
   }
   for (const prop of view.map.props) {
+    if (prop === droppedFlag) continue;
     if (prop.type !== "path" && prop.type !== "plaque" && prop.type !== "window") {
       drawProp(ctx, prop, view.layer, palette, view.map);
     }
   }
   for (const mote of view.motes) drawMote(ctx, mote);
   if (view.neighbor) drawNeighbor(ctx, view.neighbor, view.layer);
+  if (droppedFlag) drawProp(ctx, droppedFlag, view.layer, palette, view.map);
   if (view.player) drawPlayer(ctx, view.player, view.layer);
   for (const pop of view.pops ?? []) drawPop(ctx, pop, view, reduce);
   for (const beam of view.beams ?? []) drawBeam(ctx, beam);
