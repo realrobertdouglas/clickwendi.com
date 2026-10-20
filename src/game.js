@@ -573,8 +573,8 @@ export function createGame() {
       return;
     }
     if (item.type === "relay") {
-      if (plantOpen && wendi !== "pending") {
-        say("The flag is already down. The plant door is open.");
+      if (flag !== "down") {
+        say(flag === "dropped" ? "The flag is already on the stand." : "The flag is already on you.");
         return;
       }
       if (wendi !== "killed") wendi = "spared";
