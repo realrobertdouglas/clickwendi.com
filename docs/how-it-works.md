@@ -35,7 +35,7 @@ The story journal pauses play. E or Close returns. During `choice`, a click or F
 ## The night, in order
 
 1. **Apartment.** The stairwell stays shut until both lessons are done. Take the headset (click or E). Press Q and see the room under the match (`briefed`). Shoot the practice plate (`drilled`). That shot does not spend Signal. Both flags open the door, and The Assistant says how the flag works.
-2. **Street.** One neighbor, Wendi, idle near 4B. The relay east of her door is the flag. Click or E takes it. She is spared and stops fighting. Carry it to the plant. Shooting her is the other way through the plant door.
+2. **Street.** One neighbor, Wendi. The relay east of her door is the flag. She walks to it and picks it up; the flag then rides on her, and the gamertag reads HAS THE FLAG. Click or E takes it off her. She is spared and stops fighting. Carry it to the plant. Shooting her is the other way through the plant door. If she dies while holding it, the flag drops where she fell.
 3. **Plant.** Drop the flag on the stand by the southwest door. The console will not start the tank while the flag is still on you. Treating the tank yields a flask. The flask is coolant. The east door opens once you have it.
 4. **The Assistant.** Pour the flask into the inlet. The inlet accepts it on the street layer. Q from the match layer is required first. Pouring plays a short vent, then the choice: take the score, or walk away.
 
@@ -61,7 +61,7 @@ Taking the flag sets `wendi` to `"spared"` unless she is already `"killed"`, set
 
 Signal starts at 100 and never goes below 0. `SHOT_COST` is 30. `KILL_COST` is 10, applied once when Wendi's HP reaches 0. Practice-plate shots, lightning itself, and shots into The Assistant's plate do not spend Signal. Three hits plus the kill can zero it. Taking the chair also sets it to 0.
 
-HP is 4 hearts in the top right. Wendi is not a wall. She aggros inside 170px or when shot, walks slower than the player (112 vs 176), and damages at a distance under 28 about once a second. The player is immune for 1 second after a hit. A change in the player's HP floats under them for 0.9s, red for a loss and green for a heal. Entering a scene sets HP back to 4 and floats the amount regained. Wendi's hits show a yellow X and a yellow −1. Her bar steps down by 1 from 3.
+HP is 4 hearts in the top right. Wendi is not a wall. While the flag is still down she ignores the chase and walks to the relay at 112. Once she is holding it, she aggros inside 170px or when shot, still at 112 against the player's 176, and damages at a distance under 28 about once a second. The flag stays on her through that chase. The player is immune for 1 second after a hit. A change in the player's HP floats under them for 0.9s, red for a loss and green for a heal. Entering a scene sets HP back to 4 and floats the amount regained. Wendi's hits show a yellow X and a yellow −1. Her bar steps down by 1 from 3.
 
 A shot is instant. `shoot` faces the click, then `castBeam` steps 10px from the muzzle and stops on the first hit: practice plate, a solid, Wendi, The Assistant's plate (−30 from a plate of 1000), or one of her bolts. The drawn strike is a jagged teal bolt plus a short fork, life 0.2s. F shoots the current facing with a default travel of 240. The plate can reach 0. She does not die. The first shot on her plate is a spoken line; later shots only update the caption, so the journal does not fill with repeats.
 
@@ -93,6 +93,6 @@ Speakers used on purpose: `2032`, `Ward slip`, `The Assistant`, `Wendi`, `You`.
 
 The apartment stairwell label can still clip at the right edge of that small room. Closed doors do not draw a world label. Their hint is the closed copy, and the Assistant door's hint is "Flask opens this door."
 
-Wendi's street spawn and her Assistant-room patrol are separate. On the street she stays near 4B until you come within 170px. In the Assistant room, if she is alive, she paces a fixed lane and does not chase.
+Wendi's street spawn and her Assistant-room patrol are separate. On the street she starts near 4B, then goes to the flag and carries it until you take it or she drops it. In the Assistant room, if she is alive, she paces a fixed lane and does not chase.
 
 `go()` places you with `ARRIVALS["<destination>:<source>"]`. A missing key falls back to the map's spawn. The street's north lane, around y 150–250, is the open walk east. The cars sit on the straight line from the stairwell to Wendi.
