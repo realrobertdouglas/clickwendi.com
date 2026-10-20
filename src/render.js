@@ -438,7 +438,7 @@ function drawNeighbor(ctx, neighbor, layer) {
       hair: "#2a211c",
       upright: false,
     });
-    if (layer === "match") plate(ctx, neighbor.x, neighbor.y, "WENDI", "ELIMINATED", 0, 3, "#ff8aa8");
+    if (layer === "match") plate(ctx, neighbor.x, neighbor.y - 20, "WENDI", "ELIMINATED", null, null, "#ff8aa8");
     return;
   }
   if (!human) {
@@ -662,7 +662,7 @@ function drawGauge(ctx, gauge, width, height) {
   ctx.fillStyle = "#d5e6ea";
   ctx.font = "600 14px IBM Plex Mono, ui-monospace, monospace";
   ctx.textAlign = "center";
-  ctx.fillText("WASTEWATER  ·  TANK 1", x + w / 2, y + 36);
+  ctx.fillText("WASTEWATER  \u00b7  TANK 1", x + w / 2, y + 36);
   if (gauge.flashT > 0) {
     ctx.fillStyle = "#ffb15a";
     ctx.fillText(gauge.flash, x + w / 2, y + 58);
