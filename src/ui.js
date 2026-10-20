@@ -91,7 +91,7 @@ function renderMenu(menu) {
       const entry = document.createElement("p");
       if (page.who) {
         const who = document.createElement("span");
-        who.className = "who");
+        who.className = "who";
         who.textContent = page.who;
         entry.append(who, document.createElement("br"));
       }
