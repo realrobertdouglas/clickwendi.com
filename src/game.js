@@ -686,13 +686,7 @@ export function createGame() {
       wendi = "killed";
       plantOpen = true;
       map = createMap(scene, flags());
-      if (drop) {
-        const relay = map.props.find((prop) => prop.type === "relay");
-        if (relay) {
-          relay.x = drop.x - relay.w / 2;
-          relay.y = drop.y - relay.h / 2;
-        }
-      }
+      if (drop) placeDroppedFlag(drop.x, drop.y);
       signal = afterKill(signal);
       sfx.bad();
       hear("Siri", "Elimination. I award the click. The stairwell will not get her back. The plant opens because she is filed.");
@@ -703,6 +697,32 @@ export function createGame() {
 
   function solids() {
     return map.props.filter((prop) => prop.solid);
+  }
+
+  function placeDroppedFlag(x, y) {
+    const relay = map.props.find((prop) => prop.type === "relay");
+    if (!relay) return;
+    const side = Math.sign(x - player.x) || -1;
+    const gap = 78;
+    const options = [
+      [side, 0],
+      [0, 1],
+      [-side, 0],
+      [0, -1],
+    ];
+    for (const [ox, oy] of options) {
+      const cx = clamp(x + ox * gap, 80, map.w - 80);
+      const cy = clamp(y + oy * gap, 80, map.h - 80);
+      const rect = { x: cx - relay.w / 2, y: cy - relay.h / 2, w: relay.w, h: relay.h };
+      const blocked = solids().some((prop) => rectsOverlap(rect, prop));
+      if (!blocked) {
+        relay.x = rect.x;
+        relay.y = rect.y;
+        return;
+      }
+    }
+    relay.x = x - relay.w / 2;
+    relay.y = y - relay.h / 2;
   }
 
   function updatePlay(dt, input) {
@@ -1197,6 +1217,10 @@ export function createGame() {
       };
     },
   };
+}
+
+function rectsOverlap(a, b) {
+  return a.x < b.x + b.w && a.x + a.w > b.x && a.y < b.y + b.h && a.y + a.h > b.y;
 }
 
 function circleHitsRect(cx, cy, r, rect) {

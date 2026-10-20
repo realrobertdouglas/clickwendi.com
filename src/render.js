@@ -438,7 +438,7 @@ function drawNeighbor(ctx, neighbor, layer) {
       hair: "#2a211c",
       upright: false,
     });
-    if (layer === "match") plate(ctx, neighbor.x, neighbor.y, "WENDI", "ELIMINATED", 0, 3, "#ff8aa8");
+    if (layer === "match") plate(ctx, neighbor.x, neighbor.y - 20, "WENDI", "ELIMINATED", null, null, "#ff8aa8");
     return;
   }
   if (!human) {
